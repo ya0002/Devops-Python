@@ -4,11 +4,14 @@ from sqlalchemy import create_engine
 from datetime import datetime
 from pair_graph_query import get_pair_trade
 from db import Trades,Base
+import time
 
 
 if __name__ == '__main__':
 
     response=get_pair_trade()
+
+    time.sleep(45) #waiting for mysql to setup
 
     connection_string="mysql://user:root@db/main"
 
