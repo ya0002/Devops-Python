@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python main.py'
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    container_name: mysqldb
+    hostname: 'db'
+    image: mysql:8.0.28
+    restart: always
+    environment:
+      MYSQL_DATABASE: main
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    # volumes:
+    #   - .dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   container_name: phpmyadmin
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     # PMA_ARBITRARY: 1
+  #     PMA_HOST: db
+  #     PMA_USER: user
+  #     PMA_PASSWORD: root
+  #     # PMA_PORT: 33067
+  #   ports:
+  #     - "8082:80"
+  #   depends_on:
+  #     - db
+  
+# volumes:
+#   persistent:

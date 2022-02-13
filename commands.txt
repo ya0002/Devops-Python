@@ -1,0 +1,20 @@
+#run mysql via docker
+docker run --name mysql -p 33067:3306 -e MYSQL_DATABASE="testdb" MYSQL_ROOT_PASSWORD=root -d mysql:8.0.28
+
+#run PHPmyadmin
+docker run --name phpmyadmin-alone -d --link mysql_db_server:db -p 8080:80 phpmyadmin
+
+
+#compose
+docker compose up -d
+
+
+#check mysql db
+docker exec -it mysqldb mysql -u root -p
+root
+use db;
+select * from trades;
+
+
+docker tag devopspython_backend:latest thegraph-to-mysql/devopspython_backend
+docker push thegraph-to-mysql:tagname
